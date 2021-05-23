@@ -1,0 +1,25 @@
+# This is a short description of the code I used to call the POLCA polishing tool on the 4 Medaka polished assemblies of the PenX genome. 
+
+# Polca is a software package designed to use short read Illumina data to polish nanopore assemblies
+
+
+# polca.sh calls the polca software
+# -a denotes the assembly input
+# -r denotes the input reads
+# -t denotes the number of threads to include
+
+# both assemblies are called consensus.fasta as they are from the Medaka output. 
+
+# I made separate folders for the Canu and Flye, each containing their respective 10kb12Q and 10kb8Q assemblies and ran a script with contents:
+
+# Then from inside the 10kb12Q folder:
+
+polca.sh -a consensus.fasta -r '../../PenX_R1_combined.fastq ../../PenX_R2_combined.fastq' -t 60
+
+##Change directory to 10kb8Q for its run of polca polishing.
+
+cd ../10kb8Q
+
+## Secondly, run a polca polish on the assembly for 10kb8Q.
+
+polca.sh -a consensus.fasta -r '../../PenX_R1_combined.fastq ../../PenX_R2_combined.fastq' -t 60
