@@ -1,0 +1,35 @@
+# This is the exact code used to call completeness analyses using the BUSCO software, on the 4 preliminary assemblies. 
+
+# The Busco version used was v4.1.4
+
+
+# Brief explanation of parameters:
+# -i denotes input, namely a genome assembly in a fasta or txt format. 
+# -l denotes lineage, meaning the hierachical section that one wishes to compare their assembly to, for PenicilliumX I chose the section eurotialesodb10 (odb10 denoting its nature 
+# as a database).
+# -o denotes output, meaning the name of the output folder as desired by the user. 
+# -m denotes mode, using genome sets the mode to genome as the input is a full genome assembly. 
+# -c denotes the thread count or computational power alloted to the process. 
+
+# Ran a busco on the 10kb12Q Canu assembly
+
+busco -i 10kb12QCanu -l eurotialesdb10 -o 10kb12QCanu_busco_output -m genome -c 6
+
+# Ran a busco analysis on the 10kb8Q Canu assembly
+
+busco -i 10kb8QCanu -l eurotialesdb10 -o 10kb8QCanu_busco_output -m genome -c 6
+
+# Ran a busco analysis on the 10kb12Q Flye assembly
+
+busco -i 10kb12QFlye -l eurotialesdb10 -o 10kb12QFlye_busco_output -m genome -c 6
+
+# Ran a busco analysis on the 10kb8Q Flye assembly
+
+busco -i 10kb8QFlye -l eurotialesdb10 -o 10kb8QFlye_busco_output -m genome -c 6
+
+# Busco output is delivered in the output folder, but can also be seen in the standard output, delivering:
+# No. of complete BUSCOs (and further broken down into complete and single-copy BUSCOs and complete and duplicated BUSCOs). 
+# No. of fragmented BUSCOs.
+# No. of missing BUSCOs.
+# No. of total BUSCO groups searched.
+# A percentage score of complete BUSCOs.
