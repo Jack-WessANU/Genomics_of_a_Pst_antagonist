@@ -1,0 +1,20 @@
+# This is the contents of a short bash script I used to call the long-read assembler Flye for the Nanofilt read subsets 10kb8Q and 10kb12Q
+
+# The Flye version used was v2.8.2-b1689
+
+# Flye is a software package designed to assemble genomes using long read data
+
+# First Flye run, for 10kb12Q, around 50X coverage expected.
+
+# --nano-raw was used as the reads were raw reads from Nanopore 
+# -g was set to 30m as the genome (g) was predicted to be around 30Mbp in size
+# -o denotes the name for the output folder
+# -t denotes the number of threads (computing power) assigned to the operation. 
+
+flye --nano-raw PenX10kb12Q -g 30m -o 10kb12Q -t 40
+
+# Second Flye run, for 10kb8Q, around 75X coverage expected, same parameters as 10kb12Q.
+
+flye --nano-raw PenX10kb8Q -g 30m -o 10kb8Q -t 40
+
+# Output assemblies were then assessed using the QUAST, BUSCO and FindTelomeres assembly assesment tools
