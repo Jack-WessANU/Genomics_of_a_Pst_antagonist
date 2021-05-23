@@ -1,0 +1,25 @@
+# This is a short bash script I used to call the long-read assembler Canu for the Nanofilt read subsets 10kb8Q and 10kb12Q
+
+# The Canu version used was v2.1.1
+
+# Canu is a software package designed to assemble genomes using long read data
+
+# Firstly, long reads must have been processed, in terms of adapter trimming and quality control etc. 
+
+# First Canu run, for 10kb12Q, around 50X coverage expected.
+
+# nice -n 15 ionice -c3 is used to put the canu run on a low server priority as canu is very computationally intensive and will take a large amount of threads if not limited manually. 
+# canu needed to be manually installed and so was called from its designated folder. 
+# -p denotes the preface for each file.
+# -d denotes the output directory name for the canu run.
+# genomeSize denotes the estimated size of the organisms genome. 
+# -nanopore denotes that the input reads are from a nanopore device.
+# the final variable is the input reads themselves.
+
+nice -n 15 ionice -c3 /home/jack.a/tech/canu-2.1.1/build/bin/canu -p Pen_X -d Pen_X_10kb_12Q genomeSize=30m useGrid=false -nanopore ../../LR_Processing/Porechop/PenX_10kb_12Q.fastq
+
+# For second Canu run, for 10kb8Q, expected to be less accurate but a higher coverage (~75x)
+
+nice -n 15 ionice -c3 /home/jack.a/tech/canu-2.1.1/build/bin/canu -p Pen_X -d Pen_X_10kb_8Q genomeSize=30m useGrid=false -nanopore ../../LR_Processing/Porechop/PenX_10kb_8Q.fastq
+
+# The output folder contains a file called 'Pen_X.contigs.fasta', this is the assembly.
