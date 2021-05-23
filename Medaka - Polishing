@@ -1,0 +1,24 @@
+# I ran ten iterations of the Medaka long read polishing tool on my new assemblies using this for-loop I designed, I found automating Medaka very useful as it removed the 
+# need to stay behind after hours to run consequent rounds of polishing. 
+
+# Medaka is a long read polishing tool
+
+# the version of Medaka used was v1.1.0
+
+# A brief explanation of how this works:
+# nice -n 15 ionice -c3 is simply some code to not force the medaka runs as high priority, and take up too much room on the RSB wright server
+# The 'medaka_consensus' is the command to call the Medaka polishing software
+# -i signifies input, medaka uses the total basecalled long read data to polish the assembly
+# -d signifies draft, medaka outputs a polished assembly called 'consensus.fasta', therefore I renamed the assemblies 'consensus.fasta' for the first input
+# so that the forloop would not be broken. 
+# The forloop uses a series of output directories, med0 to med10, to polish the assemblies 10 times, each output is put into a med directory, then used as the input draft for the 
+# next round of polishing. 
+
+#!/bin/bash
+
+for i in {0..9};
+do
+mednum=med$[i+1]
+nice -n 15 ionice -c3 medaka_consensus -i PenX_trimmed_total.fastq -d med$i/consensus.fasta -o $mednum -t 12 -m r941_min_high_g303;
+done
+
