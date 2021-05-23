@@ -4,8 +4,6 @@
 
 # Canu is a software package designed to assemble genomes using long read data
 
-# Firstly, long reads must have been processed, in terms of adapter trimming and quality control etc. 
-
 # First Canu run, for 10kb12Q, around 50X coverage expected.
 
 # nice -n 15 ionice -c3 is used to put the canu run on a low server priority as canu is very computationally intensive and will take a large amount of threads if not limited manually. 
@@ -22,4 +20,4 @@ nice -n 15 ionice -c3 /home/jack.a/tech/canu-2.1.1/build/bin/canu -p Pen_X -d Pe
 
 nice -n 15 ionice -c3 /home/jack.a/tech/canu-2.1.1/build/bin/canu -p Pen_X -d Pen_X_10kb_8Q genomeSize=30m useGrid=false -nanopore ../../LR_Processing/Porechop/PenX_10kb_8Q.fastq
 
-# The output folder contains a file called 'Pen_X.contigs.fasta', this is the assembly.
+# Output assemblies were then assessed using the QUAST, BUSCO and FindTelomeres assembly assesment tools
