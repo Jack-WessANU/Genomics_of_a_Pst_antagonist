@@ -1,0 +1,68 @@
+library(dplyr)
+
+install.packages(c("tidyverse","hrbrthemes","tm","proustr"))
+install.packages("VennDiagram")
+
+countmatrixinvitro <- rowSums(countmatrix[,c(4,5,6)])
+countmatrixinvitro_mean <- countmatrixinvitro[]/3
+countmatrixinvitro_mean <- as.data.frame(countmatrixinvitro_mean)
+countmatrixinvitro_expressed_100 <- countmatrixinvitro_mean %>% filter(countmatrixinvitro_mean > 100)
+
+countmatrixinplanta <- rowSums(countmatrix[,c(1,2,3)])
+countmatrixinplanta_mean <- countmatrixinplanta[]/3
+countmatrixinplanta_mean <- as.data.frame(countmatrixinplanta_mean)
+countmatrixinplanta_expressed_100 <- countmatrixinplanta_mean %>% filter(countmatrixinplanta_mean > 100)
+
+#Graphing venn Diagrams
+
+library(tidyverse)
+library(hrbrthemes)
+library(tm)
+library(proustr)
+
+# Load library
+library(VennDiagram)
+
+# Generate 3 sets of 200 words
+invitro_explist <- row.names(countmatrixinvitro_expressed_100)
+inplanta_explist <- row.names(countmatrixinplanta_expressed_100)
+
+# Prepare a palette of 3 colors with R colorbrewer:
+library(RColorBrewer)
+myCol <- c("#B3E2CD", "#FDCDAC")
+
+# Chart
+venn.diagram(
+  x = list(invitro_explist, inplanta_explist), category.names = c('in vitro' , 'in planta'), filename = 'expressed genes_venn_diagramm.png',output=TRUE, ext.text = FALSE,
+  
+  #Titles and such
+   main = "Expressed genes", main.fontface = 2 ,main.fontfamily = "sans" ,main.cex = 1.2, 
+  euler.d = TRUE,
+  scaled = TRUE,
+  #Output features
+  imagetype="png" ,
+  height = 700 , 
+ width = 700 , 
+  resolution = 300,
+  compression = "lzw",
+  
+   #Circles
+  lwd = 2,
+  lty = 'blank',
+  fill = myCol,
+  
+   #Numbers
+  cex = .9,
+  fontface = "bold",
+  fontfamily = "sans",
+  
+  # Set names
+  cat.cex = 0.7,
+  cat.fontface = "bold",
+  cat.default.pos = "outer",
+  cat.pos = c(-45, 45),
+  cat.dist = c(0.035, 0.035),
+  cat.fontfamily = "sans",
+ # rotation = 1
+)
+
