@@ -1,0 +1,51 @@
+##Long read processing: 
+
+#Porechop
+https://github.com/rrwick/Porechop
+
+#Nanoplot
+https://github.com/wdecoster/NanoPlot
+
+##Read subsetting:
+
+#Nanofilt
+https://github.com/wdecoster/nanofilt
+
+##Assembly:
+
+#Canu 
+https://github.com/marbl/canu
+
+#Flye
+https://github.com/fenderglass/Flye
+
+##Short read processing:
+
+#TrimGalore
+https://github.com/FelixKrueger/TrimGalore
+
+#FASTQC
+https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+##Polishing
+
+#Medaka
+https://github.com/nanoporetech/medaka
+
+#POLCA
+https://github.com/alekseyzimin/masurca
+
+## Genome Assessment:
+
+#FindTelomeres
+https://github.com/JanaSperschneider/FindTelomeres
+
+#Quast
+https://github.com/ablab/quast
+
+#BUSCO
+https://github.com/openpaul/busco
+
+
+
+
