@@ -1,0 +1,10 @@
+#Ran Nanofilt on total PenX raw nanopore reads (total_raw.fastq) using 4 settings to subset reads based on parameters of read-length and quality-score.
+
+#Nanofilt reads over 10kb and 12 Phred score
+cat ../Raw_data/total_raw.fastq | NanoFilt -l 10000 -q 12 -s ../Raw_data/sequencing_summary.txt > PenX_10kb_12Q.fastq
+
+#Nanofilt reads over 15kb and 10 Phred score
+cat ../Raw_data/total_raw.fastq | NanoFilt -l 15000 -q 10 -s ../Raw_data/sequencing_summary.txt > PenX_15kb_12Q.fastq
+
+#Nanofilt reads over 10kb and 8 Phred score
+cat ../Raw_data/total_raw.fastq | NanoFilt -l 10000 -q 8 -s ../Raw_data/sequencing_summary.txt > PenX_10kb_8Q.fastq
