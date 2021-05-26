@@ -1,5 +1,20 @@
 
 ## Processing short reads
 
+#FASTQC
+https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
 #Trimmomatic
 https://github.com/usadellab/Trimmomatic
+
+
+## Genome annotation
+
+#funannotate
+https://github.com/nextgenusfs/funannotate
+
+#antismash
+https://github.com/antismash/antismash
+
+##RNA quantification
+https://github.com/COMBINE-lab/salmon
