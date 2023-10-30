@@ -1,0 +1,65 @@
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("edgeR")
+BiocManager::install("limma")
+BiocManager::install("tximport")
+#importing the Salmon files
+library(edgeR)
+library(limma)
+library(tximport)
+
+Inplanta1 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_wheat_pstp_genome_removed_inpla1/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+Inplanta2 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_wheat_pstp_genome_removed_inpla2/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+Inplanta3 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_wheat_pstp_genome_removed_inpla3/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+Invitro1 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_invin1/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+Invitro2 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_invin2/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+Invitro3 <-tximport("./salmon_pstp_wheat_genome_removed/salmon_penx_invin3/quant.sf", type = c("salmon"), txIn = TRUE, txOut = TRUE, countsFromAbundance = c("lengthScaledTPM"),dropInfReps=TRUE)
+
+#combining the Salmon count information into a single matrix
+countmatrix<-data.frame(Inplanta1$counts,Inplanta2$counts, Inplanta3$counts, Invitro1$counts,Invitro2$counts, Invitro3$counts)
+row.names(countmatrix)<-row.names(Inplanta1$counts)
+plotMDS(countmatrix)
+
+View(countmatrix)
+#import design matrix (generated seperately in excel)
+design<-read.csv("./design.csv")
+
+#filtering genes by expression
+dge <- DGEList(counts=countmatrix)
+group <- as.factor(c("inplanta","inplanta","inplanta","invitro","invitro","invitro"))
+keep <- filterByExpr(dge, group=group)
+dge <- dge[keep,,keep.lib.sizes=FALSE]
+
+#checking the results of filtering
+dim(dge)
+dim(design)
+
+#Use voom to determine weights for each gene to be passed to limma, voom normalises the data
+v<-voom(dge, design, plot=TRUE, normalize="quantile")
+
+#fit linear model for each gene
+fit <- lmFit(v,design)
+
+#define the comparisons you want to examine
+contrast.matrix <- makeContrasts(inplanta - invitro, levels = design)
+
+#estimate contrasts for each gene
+fit2 <- contrasts.fit(fit, contrast.matrix)
+
+#Smoothing of standard error
+fit2 <- eBayes(fit2)
+
+#Generate results tables
+pst_wheat_genome_removed_penx_inplantavsinvitro <- topTable(fit2,coef=1, number=Inf)
+
+#Export transcriptome profiles
+write.csv(pst_wheat_genome_removed_penx_inplantavsinvitro, file = "pst_wheat_genome_removed_penx_inplantavsinvitro.csv")
+
+pst_wheat_genome_removed_penx_inplantavsinvitro
+
+## inplantavsinvitro is a file that may then be used to generate graphs to display data, such as the Volcano plot
+
+
+
+
