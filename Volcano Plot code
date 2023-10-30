@@ -5,17 +5,24 @@ BiocManager::install('EnhancedVolcano')
 
 library(EnhancedVolcano)
 
-Volcano <- EnhancedVolcano(inplantavsinvitro,
-    lab = row.names(inplantavsinvitro),
-    ylim = c(0, 5),
-    x = 'logFC',
-    y = 'adj.P.Val',
-    labFace = 'bold',
-    labSize = 0.0,
-    drawConnectors = FALSE,
-    widthConnectors = 1.0,
-    title = substitute(paste(bolditalic("P. coffeae"),bold(" ANU01 "), bolditalic("in planta"),bold(" versus "),bolditalic("P. coffeae"), bold(" ANU01 "),  bolditalic("in vitro"))),
-    pCutoff = 0.05,
-    selectLab = c("No labels desired"))
+
+
+
+Volcano <- EnhancedVolcano(pst_wheat_genome_removed_penx_inplantavsinvitro,
+                           lab = row.names(pst_wheat_genome_removed_penx_inplantavsinvitro),
+                           ylim = c(0, 5),
+                           x = 'logFC',
+                           y = 'adj.P.Val',
+                           labFace = 'bold',
+                           labSize = 0.0,
+                           drawConnectors = FALSE,
+                           widthConnectors = 1.0,
+                           title = substitute(paste(bolditalic("P. coffeae"),bold(" ANU01 "), bold("hyperparasitic growth"),bold(" versus axenic growth"))),
+                           pCutoff = 0.05,
+                           FCcutoff = 1.0,
+                           selectLab = c("No labels desired"))
 
 Volcano
+
+
+
