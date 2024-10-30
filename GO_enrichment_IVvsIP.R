@@ -1,4 +1,3 @@
-
 library(tidyverse)
 library(topGO)
 library(lintr)
@@ -7,7 +6,6 @@ library(dplyr)
 library(Rgraphviz)
 
 # Loading Data
-
 # create GO background mapping
 # using dataframe "GO_background" with two columns, gene name and GO terms
 gene_to_go_mapping <- readMappings(file = "penx7.csv", sep = ";", IDsep = ",")
@@ -61,7 +59,6 @@ GO_mapped <- genesInTerm(my_go_data)
 
 ## Plotting genes in sig GO terms
 # get sig GO terms
-
 sig_terms <- result_weight_output[as.numeric(result_weight_output$weight_fisher) < 0.05,] # or fisher adjusted values
 sig_terms
 # Code to generate a dotplot of enriched GO terms, with Gene Ratio (meaning number of significant genes within an individual GO term) as the x axis and GO term as the y axis. The dot size is relative to the total number of significant genes in the term and its colour
@@ -82,8 +79,6 @@ for(go_term in sig_terms$GO.ID){
   sig_genes <- rbind(sig_genes, sig_gene)
 }
 
-sig_genes
-
 sig_terms_genes <- right_join(sig_terms, sig_genes, by = "GO.ID") # merge genes with result object above
 sig_terms_genes
 # associate LFC with sig genes
@@ -92,8 +87,6 @@ sig_LFC <- right_join(IVvsIP, sig_terms_genes, by = "Column1")
 # order by most sig GO term
 sig_LFC <- sig_LFC[order(as.numeric(sig_LFC$weight_fisher)),]
 sig_LFC$Term <- factor(sig_LFC$Term , levels = rev(unique(sig_LFC$Term )))
-
-
 
 # plot LFC
 # use "GO.ID" if GO "Term" is not unique
